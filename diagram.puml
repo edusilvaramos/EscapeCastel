@@ -1,0 +1,152 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+
+
+
+
+
+package rpgEscapeCastel {
+
+    package gameMap {}
+    package weapon {}
+    package player {}
+
+    ' ======================='
+    ' Enumerations / App'
+    ' ======================='
+    enum Team {
+        CENTAUR
+        DEVIL
+        DRAGON
+        FAIRY
+        GHOST
+        GRIM_REAPER
+        GRYPHON
+        MERMAID
+        MONSTER
+        SKELETON
+        UNICORN
+    }
+
+    class App {
+        + main(args: String[]): void
+    }
+
+    ' ======================='
+    ' PFF 3 Core'
+    ' ======================='
+    interface Destructible {
+        + takeDamage(amount: int): void
+        + isDestroyed(): boolean
+    }
+
+    class Monster implements Destructible {
+        - name: String
+        - life: int
+        - defense: int
+        + takeDamage(amount: int): void
+        + isDestroyed(): boolean
+    }
+
+    class Obstacle implements Destructible {
+        - type: String
+        - life: int
+        + takeDamage(amount: int): void
+        + isDestroyed(): boolean
+    }
+
+    abstract class Weapon {
+        - id: int
+        - name: String
+        - damage: int
+        - price: int
+        - resourcePath: String
+        + Weapon(id: int, name: String, damage: int, price: int, resourcePath: String)
+        {abstract} + asciiArt(): String
+
+        ' OVERLOADING (PFF 3)'
+        + attack(target: Destructible): void
+        + attack(target: Monster): void
+        + attack(target: Obstacle): void
+    }
+
+    class Axe extends Weapon
+    class Bow extends Weapon
+    class Explosive extends Weapon
+    class Gun extends Weapon
+    class Knife extends Weapon
+    class Mace extends Weapon
+    class Shield extends Weapon
+    class Sword extends Weapon
+
+
+    Weapon ..> Destructible : attack(...)
+
+    class WeaponStore {
+        - catalog: List<Weapon>
+        + register(weapon: Weapon): void
+        + list(): List<Weapon>
+        + getById(id: int): Weapon
+        + getByName(name: String): Weapon
+        + createByName(name: String): Weapon
+    }
+
+    WeaponStore o--> "0..*" Weapon : catalog/factory
+
+    ' ======================='
+    ' Player + Inventory (PFF 4 generics)'
+    ' ======================='
+    class Inventory <<final>> {
+        - capacity: int = 2
+        - weapons: List<Weapon>
+        + addWeapon(weapon: Weapon): boolean
+        + removeWeapon(weapon: Weapon): boolean
+        + viewWeapons(): List<Weapon>
+        + size(): int
+        + isFull(): boolean
+        + getCapacity(): int
+    }
+
+    class Player {
+        - name: String
+        - team: Team
+        - inventory: Inventory
+        + Player(name: String, team: Team, inventory: Inventory)
+        + addWeapon(weapon: Weapon): boolean
+        + removeWeapon(weapon: Weapon): boolean
+        + attack(target: Destructible, with: Weapon): void
+        + printAvatar(): void
+        + printInventory(): void
+    }
+
+    Player *-- "1" Inventory : owns
+    Inventory o--> "0..2" Weapon : contains
+    Player --> "1" Team : chosen
+    Player ..> WeaponStore : uses
+    App ..> Player : uses
+    App ..> Team : uses
+
+    ' ======================='
+    ' Compliance notes'
+    ' ======================='
+    note top of Weapon
+        PFF 3 OK:
+        • Abstract class + concrete subclasses
+        • Abstract method asciiArt()
+        • OVERLOADING: attack(Destructible), attack(Monster), attack(Obstacle)
+    end note
+
+    note top of WeaponStore
+        PFF 3 OK:
+        • Catalog + Weapon factory
+    end note
+
+    note right of Inventory
+        PFF 4 OK:
+        • Use of generics: List<Weapon>
+        • Capacity limited to 2
+    end note
+
+}
+@enduml
