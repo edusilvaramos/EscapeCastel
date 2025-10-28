@@ -13,7 +13,7 @@ public class App {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        PrintAscii.print("logo/logo1.txt");
+        PrintAscii.printAsciiart("logo/logo1.txt");
         System.out.println("----------------------");
         System.out.println("Welcome to Escape Castel !!!");
         System.out.println("----------------------");
@@ -57,7 +57,7 @@ public class App {
         
     
         // inplements start the game ? 
-        PrintAscii.print("logo/logo2.txt");
+        PrintAscii.printAsciiart("logo/logo2.txt");
         
     }
 

@@ -40,7 +40,7 @@ public class Player {
         System.out.println("Money:  " + team.getTeamMoney());
         System.out.println();
 
-        PrintAscii.print(team.getFileName());
+        PrintAscii.printAsciiart(team.getFileName());
         printInventory();
     }
 
@@ -63,7 +63,7 @@ public class Player {
         for (Weapon w : inventory.viewWeapons()) {
             System.out.printf("%d) Name: %s - Damage: %d - Price: %d", i++,w.getName(), w.getDamage(), w.getPrice());
             System.err.println("");
-            System.out.println(PrintAscii.load(w.resourcePath()));
+            System.out.println(PrintAscii.loadAsciiart(w.resourcePath()));
             System.err.println("");
             
         }

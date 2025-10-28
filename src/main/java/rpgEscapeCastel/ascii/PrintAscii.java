@@ -11,12 +11,13 @@ public final class PrintAscii {
     private static final String BASE = "ascii/";
 
     private PrintAscii() {
+        
     }
-    public static void print(String fileName) {
-        System.out.print(load(fileName));
+    public static void printAsciiart(String fileName) {
+        System.out.print(loadAsciiart(fileName));
     }
 
-    public static String load(String fileName) {
+    public static String loadAsciiart(String fileName) {
         String path = BASE + Objects.requireNonNull(fileName);
         try {
             ClassLoader cl = Thread.currentThread().getContextClassLoader();

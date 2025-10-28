@@ -82,7 +82,7 @@ public abstract class Weapon {
 
     @Override
     public String toString() {
-        PrintAscii.print(resourcePath());
+        PrintAscii.printAsciiart(resourcePath());
         return String.format("%d - %s (%d dmg, %d gold)", id, name, damage, price);
     }
 

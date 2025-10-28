@@ -9,6 +9,19 @@ package rpgEscapeCastel {
 
     package gameMap {}
 
+    package ascii {
+        class PrintAscii{
+            - BASE
+            + printAsciiart
+            + loadAsciiart
+        }
+    }
+    App ..> ascii : uses
+    Player ..> ascii : uses
+    Weapon ..> ascii : uses
+
+
+
     package weapon {
         abstract class Weapon {
             - id: int
