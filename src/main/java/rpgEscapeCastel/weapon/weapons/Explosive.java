@@ -8,8 +8,5 @@ public final class Explosive extends Weapon {
         super(3, "Explosive", 500, 400, "explosives.txt");
     }
 
-    @Override
-    public String asciiArt() {
-        return loadAscii();
-    }
+    
 }

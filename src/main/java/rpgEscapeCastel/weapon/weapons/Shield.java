@@ -8,8 +8,5 @@ public final class Shield extends Weapon {
         super(7, "Shield", 600, 100, "shields.txt");
     }
 
-    @Override
-    public String asciiArt() {
-        return loadAscii();
-    }
+    
 }

@@ -8,8 +8,5 @@ public final class Mace extends Weapon {
         super(6, "Mace", 600, 100, "mace.txt");
     }
 
-    @Override
-    public String asciiArt() {
-        return loadAscii();
-    }
+    
 }

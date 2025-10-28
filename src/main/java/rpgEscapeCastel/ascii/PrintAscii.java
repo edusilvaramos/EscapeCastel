@@ -1,4 +1,4 @@
-package rpgEscapeCastel;
+package rpgEscapeCastel.ascii;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-public final class printAscii {
+public final class PrintAscii {
 
-    private static final String BASE = "ascii/logo/";
+    private static final String BASE = "ascii/";
 
-    private printAscii() {
+    private PrintAscii() {
     }
     public static void print(String fileName) {
         System.out.print(load(fileName));
@@ -22,10 +22,10 @@ public final class printAscii {
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
             InputStream in = (cl != null) ? cl.getResourceAsStream(path) : null;
             if (in == null) {
-                in = printAscii.class.getClassLoader().getResourceAsStream(path);
+                in = PrintAscii.class.getClassLoader().getResourceAsStream(path);
             }
             if (in == null) {
-                in = printAscii.class.getResourceAsStream("/" + path);
+                in = PrintAscii.class.getResourceAsStream("/" + path);
             }
             if (in == null) {
                 return "(missing " + path + ")";

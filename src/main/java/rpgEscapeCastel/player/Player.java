@@ -1,10 +1,6 @@
 package rpgEscapeCastel.player;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import rpgEscapeCastel.ascii.PrintAscii;
 import rpgEscapeCastel.weapon.Weapon;
 
 public class Player {
@@ -20,7 +16,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return "monsters/" + name;
     }
 
     public void setName(String name) {
@@ -44,18 +40,8 @@ public class Player {
         System.out.println("Money:  " + team.getTeamMoney());
         System.out.println();
 
-        String path = "/ascii/monsters/" + team.getFileName();
-        try (InputStream in = Player.class.getResourceAsStream(path)) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
-            printInventory();
-        } catch (IOException e) {
-            System.out.println("(errro");
-        }
+        PrintAscii.print(team.getFileName());
+        printInventory();
     }
 
     public void printInventory() {
@@ -77,7 +63,7 @@ public class Player {
         for (Weapon w : inventory.viewWeapons()) {
             System.out.printf("%d) Name: %s - Damage: %d - Price: %d", i++,w.getName(), w.getDamage(), w.getPrice());
             System.err.println("");
-            System.out.println(w.asciiArt());
+            System.out.println(PrintAscii.load(w.resourcePath()));
             System.err.println("");
             
         }

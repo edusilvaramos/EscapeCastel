@@ -1,13 +1,11 @@
 package rpgEscapeCastel.weapon;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import rpgEscapeCastel.ascii.PrintAscii;
 import rpgEscapeCastel.gameMap.Destructible;
 import rpgEscapeCastel.gameMap.Monster;
 import rpgEscapeCastel.gameMap.Obstacle;
@@ -45,29 +43,8 @@ public abstract class Weapon {
     }
 
     public String resourcePath() {
-        return "ascii/weapons/" + fileName;
+        return "weapons/" + fileName;
     }
-
-    protected String loadAscii() {
-        String path = resourcePath();
-        try (var in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path)) {
-            if (in == null) {
-                return "(missing " + path + ")";
-            }
-            try (var br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    sb.append(line).append('\n');
-                }
-                return sb.toString();
-            }
-        } catch (Exception e) {
-            return "(error reading " + path + ": " + e.getMessage() + ")";
-        }
-    }
-
-    public abstract String asciiArt();
 
     public void attack(Destructible target) {
         target.takeDamage(damage);
@@ -105,7 +82,7 @@ public abstract class Weapon {
 
     @Override
     public String toString() {
-        loadAscii();
+        PrintAscii.print(resourcePath());
         return String.format("%d - %s (%d dmg, %d gold)", id, name, damage, price);
     }
 

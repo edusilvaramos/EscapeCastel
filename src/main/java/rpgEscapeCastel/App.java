@@ -2,16 +2,18 @@ package rpgEscapeCastel;
 
 import java.util.Scanner;
 
+import rpgEscapeCastel.ascii.PrintAscii;
 import rpgEscapeCastel.player.Player;
 import rpgEscapeCastel.player.Team;
 import rpgEscapeCastel.weapon.Weapon;
 import rpgEscapeCastel.weapon.WeaponStore;
 
+
 public class App {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        printAscii.print("logo1.txt");
+        PrintAscii.print("logo/logo1.txt");
         System.out.println("----------------------");
         System.out.println("Welcome to Escape Castel !!!");
         System.out.println("----------------------");
@@ -55,7 +57,7 @@ public class App {
         
     
         // inplements start the game ? 
-        printAscii.print("logo2.txt");
+        PrintAscii.print("logo/logo2.txt");
         
     }
 

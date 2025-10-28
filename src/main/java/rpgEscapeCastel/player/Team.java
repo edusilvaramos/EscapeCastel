@@ -51,7 +51,7 @@ public enum Team {
     }
 
     public String getFileName() {
-        return fileName;
+        return "monsters/" + fileName;
     }
 
     // lista simples (id - nome)

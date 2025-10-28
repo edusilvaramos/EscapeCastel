@@ -8,8 +8,4 @@ public final class Arrow extends Weapon {
         super(1, "Arrow", 100, 100, "arrow.txt");
     }
 
-    @Override
-    public String asciiArt() {
-        return loadAscii();
-    }
 }
