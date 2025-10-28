@@ -1,7 +1,7 @@
 package rpgEscapeCastel.player;
 
 public enum Team {
-    CENTAUR(1, "Centaur", 100, 100, 1000, "centaurs.txt"),
+    CENTAUR(1, "Centaur", 100, 100, 50, "centaurs.txt"),
     DEVIL(2, "Devil", 100, 100, 1000, "devils.txt"),
     DRAGON(3, "Dragon", 100, 100, 1000, "dragons.txt"),
     FAIRY(4, "Fairy", 100, 100, 1000, "fairies.txt"),
@@ -18,7 +18,7 @@ public enum Team {
     private final String teamName;
     private final int teamPower;
     private final int teamLife;
-    private final int teamMoney;
+    private int teamMoney;
     private final String fileName;
 
     Team(int id, String teamName, int teamPower, int teamLife, int teamMoney, String fileName) {
@@ -48,6 +48,10 @@ public enum Team {
 
     public int getTeamMoney() {
         return teamMoney;
+    }
+    public int setTeamMoney(int teamMoney) {
+         this.teamMoney = teamMoney;
+         return this.teamMoney;
     }
 
     public String getFileName() {

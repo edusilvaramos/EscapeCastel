@@ -8,7 +8,6 @@ import rpgEscapeCastel.player.Team;
 import rpgEscapeCastel.weapon.Weapon;
 import rpgEscapeCastel.weapon.WeaponStore;
 
-
 public class App {
 
     public static void main(String[] args) {
@@ -39,26 +38,32 @@ public class App {
             weaponStore.openStock();
             System.out.println("Buy a weapon:");
             int idWeapon = new Scanner(System.in).nextInt();
-            p.getInventory().addWeapon(Weapon.fromId(idWeapon));
-            weaponStore.buyWeapon(idWeapon);
-        } else if (r.equals("N")) {
-            System.out.println("Sell a weapon: S/N");
-            r = new Scanner(System.in).nextLine();
-            if (r.equals("N")) {
-                p.printInventory();
-                return;
+            if (weaponStore.buyWeapon(idWeapon, p)) {
+                System.out.println("You can kill the monsters !! good louck !!");
+            } else {
+                System.out.println("You don't have money !!!");
             }
-            int idWeapon = new Scanner(System.in).nextInt();
-            p.getInventory().removeWeapon(Weapon.fromId(idWeapon));
-            weaponStore.sellWeapon(idWeapon);
+
+        } else if (r.equals("N")) {
+            if (!p.getInventory().viewWeapons().isEmpty()) {
+                System.out.println("Sell a weapon: S/N");
+                r = new Scanner(System.in).nextLine();
+                if (r.equals("N")) {
+                    p.printInventory();
+                    return;
+                }
+                int idWeapon = new Scanner(System.in).nextInt();
+                p.getInventory().removeWeapon(Weapon.fromId(idWeapon));
+                weaponStore.sellWeapon(idWeapon);
+            }
+
         }
 
         p.printAvatar();
-        
-    
+
         // inplements start the game ? 
         PrintAscii.printAsciiart("logo/logo2.txt");
-        
+
     }
 
 }
