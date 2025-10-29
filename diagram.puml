@@ -7,7 +7,31 @@ package rpgEscapeCastel {
         + main(args: String[]): void
     }
 
-    package gameMap {}
+    package gameMap {
+        
+
+    }
+
+    abstract class Destructible {
+        + takeDamageint: void
+        + isDestroyed(): boolean
+    }
+
+    class Monster extends Destructible {
+        - name: String
+        - life: int
+        - defense: int
+        + takeDamageint: void
+        + isDestroyed(): boolean
+    }
+
+    class Obstacle extends Destructible {
+        - type: String
+        - life: int
+        + takeDamageint: void
+        + isDestroyed(): boolean
+    }
+
 
     package ascii {
         class PrintAscii{
@@ -16,6 +40,7 @@ package rpgEscapeCastel {
             + loadAsciiart
         }
     }
+    Monster ..> team : get
     App ..> ascii : uses
     Player ..> ascii : uses
     Weapon ..> ascii : uses
@@ -99,31 +124,6 @@ package rpgEscapeCastel {
             + printInventory(): void
         }
     }
-
-    interface Destructible {
-        + takeDamage(amount: int): void
-        + isDestroyed(): boolean
-    }
-
-    class Monster implements Destructible {
-        - name: String
-        - life: int
-        - defense: int
-        + takeDamage(amount: int): void
-        + isDestroyed(): boolean
-    }
-
-    class Obstacle implements Destructible {
-        - type: String
-        - life: int
-        + takeDamage(amount: int): void
-        + isDestroyed(): boolean
-    }
-
-
-
-
-
 
 
     Player *-- "1" Inventory : owns

@@ -63,6 +63,8 @@ public class App {
 
         // inplements start the game ? 
         PrintAscii.printAsciiart("logo/logo2.txt");
+        PrintAscii.printAsciiart("logo/youDied.txt");
+        PrintAscii.printAsciiart("logo/gameOver.txt");
 
     }
 
