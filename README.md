@@ -29,3 +29,5 @@ https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 https://www.asciiart.eu
 https://plantuml.com/class-diagram#google_vignette
 https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml
+https://codegym.cc/groups/posts/matrix-in-java-2d-arrays
+https://www.geeksforgeeks.org/java/multidimensional-arrays-in-java/

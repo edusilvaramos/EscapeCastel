@@ -1,22 +1,27 @@
 package rpgEscapeCastel.gameMap;
 
-public class Obstacle implements Destructible {
+public class Obstacle implements Destructible, InterfacePlace {
 
     private final String type;
-    private int life;
+    private int power;
 
-    public Obstacle(String type, int life) {
+    public Obstacle(String type, int power) {
         this.type = type;
-        this.life = life;
+        this.power = power;
     }
 
     @Override
     public void takeDamage(int amount) {
-        life -= amount;
+        power -= amount;
     }
 
     @Override
     public boolean isDestroyed() {
-        return life <= 0;
+        return power <= 0;
+    }
+
+    @Override
+    public String symbolPlace() {
+        return " O ";
     }
 }

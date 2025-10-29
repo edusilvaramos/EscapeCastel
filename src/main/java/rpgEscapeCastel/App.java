@@ -3,6 +3,7 @@ package rpgEscapeCastel;
 import java.util.Scanner;
 
 import rpgEscapeCastel.ascii.PrintAscii;
+import rpgEscapeCastel.gameMap.GameMap;
 import rpgEscapeCastel.player.Player;
 import rpgEscapeCastel.player.Team;
 import rpgEscapeCastel.weapon.Weapon;
@@ -60,12 +61,14 @@ public class App {
         }
 
         p.printAvatar();
-
-        // inplements start the game ? 
         PrintAscii.printAsciiart("logo/logo2.txt");
-        PrintAscii.printAsciiart("logo/youDied.txt");
-        PrintAscii.printAsciiart("logo/gameOver.txt");
+        GameMap map = new GameMap(p);
+        map.print();
+        // inplements start the game ? 
 
     }
 
 }
+
+
+ 

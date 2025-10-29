@@ -1,5 +1,7 @@
 package rpgEscapeCastel.player;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public enum Team {
     CENTAUR(1, "Centaur", 100, 100, 50, "centaurs.txt"),
     DEVIL(2, "Devil", 100, 100, 1000, "devils.txt"),
@@ -74,4 +76,10 @@ public enum Team {
         }
         return null;
     }
+
+    public static Team random() {
+        Team[] all = values();
+        return all[ThreadLocalRandom.current().nextInt(all.length)];
+    }
+
 }

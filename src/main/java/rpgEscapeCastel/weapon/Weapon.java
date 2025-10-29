@@ -58,7 +58,7 @@ public abstract class Weapon {
         target.takeDamage(damage);
     }
 
-    // Registry para criar por id (substitui enum.values())
+    // Weapon factory
     private static final Map<Integer, Supplier<Weapon>> BY_ID = new HashMap<>();
 
     static {

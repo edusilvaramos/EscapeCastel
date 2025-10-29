@@ -1,9 +1,10 @@
 package rpgEscapeCastel.player;
 
 import rpgEscapeCastel.ascii.PrintAscii;
+import rpgEscapeCastel.gameMap.InterfacePlace;
 import rpgEscapeCastel.weapon.Weapon;
 
-public class Player {
+public class Player implements InterfacePlace{
 
     private String name;
     private final Team team;
@@ -70,4 +71,9 @@ public class Player {
         System.out.println("----------------------");
 
     }
+    @Override
+    public String symbolPlace() {
+        return " P ";
+    }
+
 }
