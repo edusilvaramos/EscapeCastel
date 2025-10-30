@@ -76,4 +76,9 @@ public class Player implements InterfacePlace{
         return " P ";
     }
 
+    @Override
+    public String getFileName() {
+        return team.getFileName();
+    }
+
 }

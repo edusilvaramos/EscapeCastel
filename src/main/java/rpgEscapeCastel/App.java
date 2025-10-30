@@ -63,12 +63,9 @@ public class App {
         p.printAvatar();
         PrintAscii.printAsciiart("logo/logo2.txt");
         GameMap map = new GameMap(p);
-        map.print();
+        map.playerMovement();
         // inplements start the game ? 
 
     }
 
 }
-
-
- 

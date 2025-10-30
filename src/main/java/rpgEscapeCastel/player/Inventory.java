@@ -9,7 +9,7 @@ import rpgEscapeCastel.weapon.Weapon;
 
 public final class Inventory {
 
-    private static final int CAPACITY = 2;
+    private static final int CAPACITY = 1;
     private final List<Weapon> weapons = new ArrayList<>(CAPACITY);
 
     public boolean addWeapon(Weapon weapon) {
@@ -34,5 +34,12 @@ public final class Inventory {
     
     public int getCapacity() {
         return CAPACITY;
+    }
+
+    public Weapon getWeapon() {
+        for (Weapon w : weapons) {
+            return w;
+        }
+        return null;
     }
 }

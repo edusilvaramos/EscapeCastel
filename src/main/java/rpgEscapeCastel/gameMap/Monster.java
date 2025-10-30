@@ -41,4 +41,16 @@ public class Monster implements Destructible, InterfacePlace {
     public String symbolPlace() {
         return " M ";
     }
+
+     @Override
+    public String getFileName() {
+        return fileName;
+    }
+    @Override
+    public int getLife() {
+        return life;
+    }
+    @Override
+    public int getPower() {
+        return defense;}
 }

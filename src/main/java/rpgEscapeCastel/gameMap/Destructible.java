@@ -2,6 +2,11 @@ package rpgEscapeCastel.gameMap;
 
 public interface Destructible {
 
-    void takeDamage(int amount);
-    boolean isDestroyed();
+    public void takeDamage(int amount);
+    public boolean isDestroyed();
+    public String getFileName();
+    // fight
+    public int getPower();
+    public int getLife();
+
 }

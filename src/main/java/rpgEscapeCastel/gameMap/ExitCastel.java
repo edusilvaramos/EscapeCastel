@@ -9,6 +9,10 @@ public final class ExitCastel implements InterfacePlace {
         return "-> ";
     }
 
+    public String getFileName() {
+        return "exit.txt";
+    }
+
     public static void gameOver() {
         PrintAscii.printAsciiart("logo/gameOver.txt");
 
@@ -20,6 +24,9 @@ public final class ExitCastel implements InterfacePlace {
 
     public static void win() {
         PrintAscii.printAsciiart("logo/win.txt");
+    }
+    public static void winFight() {
+        PrintAscii.printAsciiart("logo/winfight.txt");
     }
 
 }
