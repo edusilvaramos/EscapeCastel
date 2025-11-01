@@ -15,11 +15,12 @@ public final class ExitCastel implements InterfacePlace {
 
     public static void gameOver() {
         PrintAscii.printAsciiart("logo/gameOver.txt");
-
+        System.exit(0);
     }
 
     public static void youDied() {
         PrintAscii.printAsciiart("logo/youDied.txt");
+        System.exit(0);
     }
 
     public static void win() {

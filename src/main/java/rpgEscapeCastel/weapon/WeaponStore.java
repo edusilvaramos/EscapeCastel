@@ -45,4 +45,6 @@ public class WeaponStore {
         this.stockWeapons.add(Weapon.fromId(idWeapon));
     }
 
+   
+
 }

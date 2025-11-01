@@ -3,18 +3,18 @@ package rpgEscapeCastel.player;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Team {
-    CENTAUR(1, "Centaur", 100, 100, 50, "centaurs.txt"),
-    DEVIL(2, "Devil", 100, 100, 1000, "devils.txt"),
-    DRAGON(3, "Dragon", 100, 100, 1000, "dragons.txt"),
-    FAIRY(4, "Fairy", 100, 100, 1000, "fairies.txt"),
-    GHOST(5, "Ghost", 100, 100, 1000, "ghosts.txt"),
-    GRIM_REAPER(6, "Grim", 100, 100, 1000, "grim.txt"),
-    GRYPHON(7, "Gryphon", 100, 100, 1000, "gryphon.txt"),
-    MERMAID(8, "Mermaid", 100, 100, 1000, "mermaids.txt"),
-    MONSTER(9, "Monster", 100, 100, 1000, "monsters.txt"),
-    OGRE(10, "Ogre", 100, 100, 1000, "ogre.txt"),
-    SKELETON(11, "Skeleton", 100, 100, 1000, "skeletons.txt"),
-    UNICORN(12, "Unicorn", 100, 100, 1000, "unicorns.txt");
+    CENTAUR(1, "Centaur", 25, 180, 60, "centaurs.txt"),
+    DEVIL(2, "Devil", 70, 500, 300, "devils.txt"),
+    DRAGON(3, "Dragon", 90, 650, 500, "dragons.txt"),
+    FAIRY(4, "Fairy", 12, 80, 20, "fairies.txt"),
+    GHOST(5, "Ghost", 15, 90, 25, "ghosts.txt"),
+    GRIM_REAPER(6, "Grim", 85, 600, 450, "grim.txt"),
+    GRYPHON(7, "Gryphon", 35, 260, 90, "gryphon.txt"),
+    MERMAID(8, "Mermaid", 22, 140, 50, "mermaids.txt"),
+    MONSTER(9, "Monster", 20, 120, 40, "monsters.txt"),
+    OGRE(10, "Ogre", 40, 300, 120, "ogre.txt"),
+    SKELETON(11, "Skeleton", 10, 60, 15, "skeletons.txt"),
+    UNICORN(12, "Unicorn", 45, 320, 150, "unicorns.txt");
 
     private final int id;
     private final String teamName;
@@ -51,9 +51,10 @@ public enum Team {
     public int getTeamMoney() {
         return teamMoney;
     }
+
     public int setTeamMoney(int teamMoney) {
-         this.teamMoney = teamMoney;
-         return this.teamMoney;
+        this.teamMoney = teamMoney;
+        return this.teamMoney;
     }
 
     public String getFileName() {

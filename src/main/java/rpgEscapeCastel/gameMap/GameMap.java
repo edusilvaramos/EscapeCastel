@@ -38,13 +38,14 @@ public final class GameMap {
         playerCol = 0;
         grid[SIZE - 1][SIZE - 1] = new ExitCastel();
 
+        // apor testes deixar eles sem marcas 
         // coloca 3 M e 3 O em lugares livres
         List<int[]> livres = new ArrayList<>();
-        for (int r = 0; r < SIZE; r++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (!((r == 0 && c == 0) || (r == SIZE - 1 && c == SIZE - 1))) {
-                    if (grid[r][c] == null) {
-                        livres.add(new int[]{r, c});
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                if (!((row == 0 && col == 0) || (row == SIZE - 1 && col == SIZE - 1))) {
+                    if (grid[row][col] == null) {
+                        livres.add(new int[]{row, col});
                     }
                 }
             }
@@ -62,7 +63,7 @@ public final class GameMap {
         }
     }
 
-    private void print() {
+    private void printMap() {
         PrintAscii.printAsciiart("castel.txt");
         System.out.println();
         for (int r = 0; r < SIZE; r++) {
@@ -73,18 +74,14 @@ public final class GameMap {
             System.out.println();
         }
         System.out.println();
-        PrintAscii.printAsciiart("div.txt");
-    }
+        System.out.println();
 
-    // se o espertinho sair do mapa
-    private boolean isInside(int r, int c) {
-        return r >= 0 && r < SIZE && c >= 0 && c < SIZE;
     }
 
     private static final java.util.Scanner SC = new java.util.Scanner(System.in);
 
     public void playerMovement() {
-        print();
+        printMap();
         while (true) {
             System.out.println("Move: ");
             System.out.println("up: z");
@@ -94,36 +91,36 @@ public final class GameMap {
             System.out.println("To be a loser hehe: x");
             System.out.println();
             System.out.print("What do you want to do? ");
-            String cmd = SC.nextLine().trim().toLowerCase();
+            String move = SC.nextLine().trim().toLowerCase();
 
-            if (cmd.equals("x")) {
+            if (move.equals("x")) {
                 ExitCastel.youDied();
                 System.exit(0);
             }
-
+            // possit
             int alvoR = playerRow;
             int alvoC = playerCol;
 
             // movimento simples
-            if (cmd.equals("z")) {
+            if (move.equals("z")) {
                 alvoR--;
-            } else if (cmd.equals("s")) {
+            } else if (move.equals("s")) {
                 alvoR++;
-            } else if (cmd.equals("q")) {
+            } else if (move.equals("q")) {
                 alvoC--;
-            } else if (cmd.equals("d")) {
+            } else if (move.equals("d")) {
                 alvoC++;
             }
 
-            if (!isInside(alvoR, alvoC)) {
-                System.out.println("");
-                System.out.println("Out of bounds !!!");
-                System.out.println("");
-
+            if (alvoR < 0 || alvoR >= SIZE || alvoC < 0 || alvoC >= SIZE) {
+                System.out.println();
+                System.out.println("Out of bounds!!! You can't escape from here!! ha ha ha");
+                System.out.println();
                 continue;
             }
 
             InterfacePlace goPlace = grid[alvoR][alvoC];
+
             if ((goPlace instanceof Monster) || (goPlace instanceof Obstacle)) {
 
                 PrintAscii.printAsciiart("fight.txt");
@@ -137,19 +134,17 @@ public final class GameMap {
                 PrintAscii.printAsciiart("div.txt");
 
                 System.out.println("Fight or chicken out? (f/c)");
-
                 System.out.println();
-                System.out.print("What do you want to do? ");
-                String cmd2 = SC.nextLine().trim().toLowerCase();
+                String battle = SC.nextLine().trim().toLowerCase();
 
-                if (cmd2.equals("f")) {
-                    if (!fighth(player, (Destructible) goPlace)) {
+                if (battle.equals("f")) {
+                    if (!fight(player, (Destructible) goPlace)) {
                         ExitCastel.youDied();
-                        System.exit(0);
-                    }else {
+                    } else {
                         ExitCastel.winFight();
                     }
                 }
+                printMap();
                 continue;
             }
 
@@ -165,17 +160,25 @@ public final class GameMap {
                 ExitCastel.win();
                 System.exit(0);
             }
-            print();
+            PrintAscii.printAsciiart("div.txt");
+            printMap(); 
+            
         }
+       
+    
+
     }
 
-    public boolean fighth(Player p, Destructible enemy) {
+    public boolean fight(Player p, Destructible enemy) {
 
         // power = weaponPower + teamPower
-        Integer weaponDamage = p.getInventory().getWeapon().getDamage();
-        if (weaponDamage < 0) {
+        int weaponDamage = 0;
+        if (p.getInventory().getWeapon() == null) {
             weaponDamage = 0;
+        } else {
+            weaponDamage = p.getInventory().getWeapon().getDamage();
         }
+
         int playerPower = weaponDamage + p.getTeam().getTeamPower();
         int playerLife = p.getTeam().getTeamLife();
         int enemyLife = enemy.getLife();

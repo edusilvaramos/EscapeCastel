@@ -31,7 +31,7 @@ public final class Inventory {
     public int size() {
         return weapons.size();
     }
-    
+
     public int getCapacity() {
         return CAPACITY;
     }
@@ -41,5 +41,10 @@ public final class Inventory {
             return w;
         }
         return null;
+    }
+
+    // if player has the weapon return true
+    public boolean hasWeapon(Weapon weapon) {
+        return weapons.contains(weapon);
     }
 }
