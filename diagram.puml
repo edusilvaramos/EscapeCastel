@@ -3,103 +3,19 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle bold
 
 package rpgEscapeCastel {
+
     class App {
         + main(args: String[]): void
     }
 
-    package gameMap {
-
-        class gameMap{
-
-        }
-
-        interface InterfacePlace{
-            + symbolPlace
-        }
-
-        abstract class Destructible {
-            + takeDamageint: void
-            + isDestroyed(): boolean
-        }
-
-        class Monster extends Destructible {
-            - name: String
-            - life: int
-            - defense: int
-            + takeDamageint: void
-            + isDestroyed(): boolean
-        }
-
-        class Obstacle extends Destructible {
-            - type: String
-            - life: int
-            + takeDamageint: void
-            + isDestroyed(): boolean
-        }
-
-        class ExitCastel{
-            + gameOver
-            + youDied
-            + win
-        }
-    }
-
-'colocar o implements e o simbolo, -ver a doc  '
-    Weapon ..> ascii : uses
-    Monster ..> team : get
-    App ..> ascii : uses
-    Player ..> ascii : uses
-    
     package ascii {
-        class PrintAscii{
-            - BASE
-            + printAsciiart
-            + loadAsciiart
+        class PrintAscii {
+            - BASE : String
+            + printAsciiart(fileName : String) : void
+            + loadAsciiart(fileName : String) : String
         }
     }
-    
 
-
-
-    package weapon {
-        abstract class Weapon {
-            - id: int
-            - name: String
-            - damage: int
-            - price: int
-            - resourcePath: String
-            + Weapon(id: int, name: String, damage: int, price: int, resourcePath: String)
-            {abstract} + asciiArt(): String
-
-            ' OVERLOADING (PFF 3)'
-            + attack(target: Destructible): void
-            + attack(target: Monster): void
-            + attack(target: Obstacle): void
-        }
-
-        class Axe extends Weapon
-        class Bow extends Weapon
-        class Explosive extends Weapon
-        class Gun extends Weapon
-        class Knife extends Weapon
-        class Mace extends Weapon
-        class Shield extends Weapon
-        class Sword extends Weapon
-
-        Weapon ..> Destructible : attack(...)
-
-        class WeaponStore {
-            - catalog: List<Weapon>
-            + register(weapon: Weapon): void
-            + list(): List<Weapon>
-            + getById(id: int): Weapon
-            + getByName(name: String): Weapon
-            + createByName(name: String): Weapon
-        }
-
-        WeaponStore o--> "0..*" Weapon : catalog/factory
-
-    }
     package player {
 
         enum Team {
@@ -114,37 +30,175 @@ package rpgEscapeCastel {
             MONSTER
             SKELETON
             UNICORN
+
+            - id : int
+            - teamName : String
+            - teamPower : int
+            - teamLife : int
+            - teamMoney : int
+            - fileName : String
+
+            + getId() : int
+            + getTeamName() : String
+            + getTeamPower() : int
+            + getTeamLife() : int
+            + getTeamMoney() : int
+            + setTeamMoney(int) : void
+            + getFileName() : String
+            + printTeams() : void
+            + fromId(int) : Team
+            + random() : Team
         }
-        class Inventory <<final>> {
-            - capacity: int = 2
-            - weapons: List<Weapon>
-            + addWeapon(weapon: Weapon): boolean
-            + removeWeapon(weapon: Weapon): boolean
-            + viewWeapons(): List<Weapon>
-            + size(): int
-            + isFull(): boolean
-            + getCapacity(): int
+
+        class Inventory {
+            - capacity : int = 1
+            - weapons : List<weapon.Weapon>
+            + addWeapon(weapon : weapon.Weapon) : boolean
+            + removeWeapon(weapon : weapon.Weapon) : boolean
+            + viewWeapons() : List<weapon.Weapon>
+            + size() : int
+            + isFull() : boolean
+            + getCapacity() : int
+            + hasWeapon() : boolean
         }
 
         class Player {
-            - name: String
-            - team: Team
-            - inventory: Inventory
-            + Player(name: String, team: Team, inventory: Inventory)
-            + addWeapon(weapon: Weapon): boolean
-            + removeWeapon(weapon: Weapon): boolean
-            + attack(target: Destructible, with: Weapon): void
-            + printAvatar(): void
-            + printInventory(): void
+            - name : String
+            - team : Team
+            + getName() : String
+            + setName(String) : void
+            + getTeam() : Team
+            + getInventory() : Inventory
+            + printAvatar() : void
+            + printInventory() : void
+            + symbolPlace() : String
+            + getFileName() : String
         }
     }
 
+    package weapon {
 
-    Player *-- "1" Inventory : owns
-    Inventory o--> "0..2" Weapon : contains
-    Player --> "1" Team : chosen
-    Player ..> WeaponStore : uses
-    App ..> Player : uses
-    App ..> Team : uses
+        abstract class Weapon {
+            - id : int
+            - name : String
+            - price : int
+            - damage : int
+            - fileName : String
+            ..operations..
+            + getId() : int
+            + getName() : String
+            + getPrice() : int
+            + getDamage() : int
+            + getFileName() : String
+            + attack(target : gameMap.Destructible) : void
+        }
+
+        class Axe extends Weapon
+        class Bow extends Weapon
+        class Explosive extends Weapon
+        class Gun extends Weapon
+        class Knife extends Weapon
+        class Mace extends Weapon
+        class Shield extends Weapon
+        class Sword extends Weapon
+
+        class WeaponStore {
+            - stockWeapons : List<Weapon>
+            + openStock() : void
+            + buyWeapon(index : int, buyer : player.Player) : boolean
+            + removeWeapon(index : int) : void
+            + sellWeapon(index : int) : void
+        }
+
+
+    }
+
+    package gameMap {
+
+        class GameMap {
+            - SIZE : int
+            - grid : InterfacePlace[][]
+            - rnd : Random
+            - player : player.Player
+            - playerRow : int
+            - playerCol : int
+            - SC : Scanner
+            --
+            - fisrtMap(start : InterfacePlace) : void
+            - printMap() : void
+            + fight(p : player.Player, target : Destructible) : boolean
+            + playerMovement() : void
+        }
+
+        interface InterfacePlace {
+            + getFileName() : String
+            + symbolPlace() : String
+        }
+
+        interface Destructible {
+            + isDestroyed() : boolean
+            + getFileName() : String
+            + takeDamage(amount : int) : void
+            + getLife() : int
+            + getPower() : int
+        }
+
+        class Monster implements Destructible, InterfacePlace {
+            - name : String
+            - life : int
+            - defense : int
+            - fileName : String
+            + isDestroyed() : boolean
+            + getFileName() : String
+            + takeDamage(amount : int) : void
+            + fromTeam(team : player.Team) : Monster
+            + symbolPlace() : String
+            + getLife() : int
+            + getPower() : int
+        }
+
+        class Obstacle implements Destructible, InterfacePlace {
+            - obstacleType : String
+            - life : int
+            - defense : int
+            - fileName : String
+            + toString() : String
+            + isDestroyed() : boolean
+            + getFileName() : String
+            + takeDamage(amount : int) : void
+            + symbolPlace() : String
+            + getLife() : int
+            + getPower() : int
+        }
+
+        class ExitCastel implements InterfacePlace {
+            + getFileName() : String
+            + win() : void
+            + symbolPlace() : String
+            + youDied() : void
+            + winFight() : void
+            + gameOver() : void
+        }
+
+
+    }
+
+    App ..> ascii.PrintAscii : uses
+    player.Player ..> ascii.PrintAscii : uses
+
+    player.Player "1" *-- "1" player.Inventory : owns
+    player.Inventory "1" o-- "0..*" weapon.Weapon : weapons
+    player.Player --> "1" player.Team : chosen
+    player.Player ..> weapon.WeaponStore : uses
+
+    App ..> player.Player : uses
+    App ..> player.Team : uses
+    Weapon ..> rpgEscapeCastel.ascii.PrintAscii : uses
+    Weapon ..> gameMap.Destructible : attack(...)
+    WeaponStore o-- "*" Weapon : catalog/factory
+    GameMap o-- player.Player : player
+    GameMap ..> InterfacePlace : grid cells
+    GameMap ..> Destructible : combat
 }
+
 @enduml
