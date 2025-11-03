@@ -11,7 +11,7 @@ import rpgEscapeCastel.player.Team;
 
 public final class GameMap {
 
-    private static final int SIZE = 8;
+    private static final int SIZE = 13;
     private final InterfacePlace[][] grid = new InterfacePlace[SIZE][SIZE];
     private final Random rnd = new Random();
     private Player player;
@@ -53,11 +53,14 @@ public final class GameMap {
         Collections.shuffle(livres, rnd);
         int idx = 0;
 
-        for (int i = 0; i < 3 && idx < livres.size(); i++, idx++) {
+        // base map size
+        int nObstaclerAndMosters = SIZE * SIZE / 12;
+
+        for (int i = 0; i < nObstaclerAndMosters && idx < livres.size(); i++, idx++) {
             int[] p = livres.get(idx);
             grid[p[0]][p[1]] = Monster.fromTeam(Team.random());
         }
-        for (int i = 0; i < 3 && idx < livres.size(); i++, idx++) {
+        for (int i = 0; i < nObstaclerAndMosters && idx < livres.size(); i++, idx++) {
             int[] p = livres.get(idx);
             grid[p[0]][p[1]] = new Obstacle();
         }
@@ -121,11 +124,13 @@ public final class GameMap {
 
             InterfacePlace goPlace = grid[alvoR][alvoC];
 
+            // refac this, x instanceof...
             if ((goPlace instanceof Monster) || (goPlace instanceof Obstacle)) {
 
                 PrintAscii.printAsciiart("fight.txt");
                 System.out.println("");
                 PrintAscii.printAsciiart(player.getTeam().getFileName());
+                player.printInventory();
                 System.out.println("");
                 PrintAscii.printAsciiart("x.txt");
                 System.out.println("");
@@ -140,6 +145,7 @@ public final class GameMap {
                 if (battle.equals("f")) {
                     if (!fight(player, (Destructible) goPlace)) {
                         ExitCastel.youDied();
+                        break;
                     } else {
                         ExitCastel.winFight();
                     }
@@ -165,8 +171,6 @@ public final class GameMap {
             
         }
        
-    
-
     }
 
     public boolean fight(Player p, Destructible enemy) {

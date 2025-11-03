@@ -5,14 +5,14 @@ skinparam classFontStyle bold
 package rpgEscapeCastel {
 
     class App {
-        + main(args: String[]): void
+        + main: void
     }
 
     package ascii {
         class PrintAscii {
             - BASE : String
-            + printAsciiart(fileName : String) : void
-            + loadAsciiart(fileName : String) : String
+            + printAsciiart: void
+            + loadAsciiart: String
         }
     }
 
@@ -43,30 +43,30 @@ package rpgEscapeCastel {
             + getTeamPower() : int
             + getTeamLife() : int
             + getTeamMoney() : int
-            + setTeamMoney(int) : void
+            + setTeamMoney() : void
             + getFileName() : String
             + printTeams() : void
-            + fromId(int) : Team
+            + fromId() : Team
             + random() : Team
         }
 
         class Inventory {
-            - capacity : int = 1
-            - weapons : List<weapon.Weapon>
-            + addWeapon(weapon : weapon.Weapon) : boolean
-            + removeWeapon(weapon : weapon.Weapon) : boolean
-            + viewWeapons() : List<weapon.Weapon>
+            - capacity : int
+            - weapons : List
+            + addWeapon(): boolean
+            + removeWeapon() : boolean
+            + viewWeapons() : List
             + size() : int
             + isFull() : boolean
             + getCapacity() : int
             + hasWeapon() : boolean
         }
 
-        class Player {
+        class Player implements InterfacePlace  {
             - name : String
             - team : Team
             + getName() : String
-            + setName(String) : void
+            + setName() : void
             + getTeam() : Team
             + getInventory() : Inventory
             + printAvatar() : void
@@ -90,7 +90,7 @@ package rpgEscapeCastel {
             + getPrice() : int
             + getDamage() : int
             + getFileName() : String
-            + attack(target : gameMap.Destructible) : void
+            + attack() : void
         }
 
         class Axe extends Weapon
@@ -103,11 +103,11 @@ package rpgEscapeCastel {
         class Sword extends Weapon
 
         class WeaponStore {
-            - stockWeapons : List<Weapon>
+            - stockWeapons : List
             + openStock() : void
-            + buyWeapon(index : int, buyer : player.Player) : boolean
-            + removeWeapon(index : int) : void
-            + sellWeapon(index : int) : void
+            + buyWeapon() : boolean
+            + removeWeapon() : void
+            + sellWeapon() : void
         }
 
 
@@ -117,16 +117,16 @@ package rpgEscapeCastel {
 
         class GameMap {
             - SIZE : int
-            - grid : InterfacePlace[][]
+            - grid : InterfacePlace
             - rnd : Random
             - player : player.Player
             - playerRow : int
             - playerCol : int
             - SC : Scanner
             --
-            - fisrtMap(start : InterfacePlace) : void
+            - fisrtMaph(): void
             - printMap() : void
-            + fight(p : player.Player, target : Destructible) : boolean
+            + fight(): boolean
             + playerMovement() : void
         }
 
@@ -138,7 +138,7 @@ package rpgEscapeCastel {
         interface Destructible {
             + isDestroyed() : boolean
             + getFileName() : String
-            + takeDamage(amount : int) : void
+            + takeDamage() : void
             + getLife() : int
             + getPower() : int
         }
@@ -150,8 +150,8 @@ package rpgEscapeCastel {
             - fileName : String
             + isDestroyed() : boolean
             + getFileName() : String
-            + takeDamage(amount : int) : void
-            + fromTeam(team : player.Team) : Monster
+            + takeDamage() : void
+            + fromTeam() : Monster
             + symbolPlace() : String
             + getLife() : int
             + getPower() : int
@@ -165,7 +165,7 @@ package rpgEscapeCastel {
             + toString() : String
             + isDestroyed() : boolean
             + getFileName() : String
-            + takeDamage(amount : int) : void
+            + takeDamage() : void
             + symbolPlace() : String
             + getLife() : int
             + getPower() : int
@@ -186,17 +186,17 @@ package rpgEscapeCastel {
     App ..> ascii.PrintAscii : uses
     player.Player ..> ascii.PrintAscii : uses
 
-    player.Player "1" *-- "1" player.Inventory : owns
-    player.Inventory "1" o-- "0..*" weapon.Weapon : weapons
-    player.Player --> "1" player.Team : chosen
-    player.Player ..> weapon.WeaponStore : uses
+    player.Player "1" *-- "1" Inventory : owns
+    player.Inventory "1" o-- "1" Weapon : weapons
+    player.Player --> "1" Team : chosen
+    player.Player ..> WeaponStore : uses
 
-    App ..> player.Player : uses
-    App ..> player.Team : uses
-    Weapon ..> rpgEscapeCastel.ascii.PrintAscii : uses
-    Weapon ..> gameMap.Destructible : attack(...)
+    App ..> Player : uses
+    App ..> Team : uses
+    Weapon ..> PrintAscii : uses
+    Weapon ..> Destructible : attack
     WeaponStore o-- "*" Weapon : catalog/factory
-    GameMap o-- player.Player : player
+    GameMap o-- Player : player
     GameMap ..> InterfacePlace : grid cells
     GameMap ..> Destructible : combat
 }

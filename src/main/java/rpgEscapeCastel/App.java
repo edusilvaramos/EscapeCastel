@@ -20,26 +20,65 @@ public class App {
 
         System.out.println("Create the name player:");
         String playerName = scanner.nextLine();
-        System.out.println("----------------------");
 
-        Team.printTeams();
-        int teamId = scanner.nextInt();
-        Team team = Team.fromId(teamId);
         System.out.println("----------------------");
-        String playerTeam = scanner.nextLine();
+        int teamId;
+        while (true) {
+            Team.printTeams();
+            String teamIdInput = scanner.nextLine().trim();
+
+            try {
+                teamId = Integer.parseInt(teamIdInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid option !!");
+                continue;
+            }
+
+            if (teamId < 1 || teamId > 12) {
+                System.out.println("Invalid Team: " + teamId);
+            } else {
+                break;
+            }
+        }
+        Team team = Team.fromId(teamId);
         System.out.println("----------------------");
 
         Player p = new Player(playerName, team);
         p.printAvatar();
 
         System.out.println("open weapon store: S/N");
-        String r = new Scanner(System.in).nextLine();
+        String r;
+        while (true) {
+            String response = scanner.nextLine().toUpperCase();
+            if (response.equals("S") || response.equals("N")) {
+                r = response;
+                break;
+            } else {
+                System.out.println("Invalid option !!");
+            }
+        }
+
         WeaponStore weaponStore = new WeaponStore();
         if (r.equals("S")) {
-            weaponStore.openStock();
-            System.out.println("Buy a weapon:");
-            int idWeapon = new Scanner(System.in).nextInt();
-            if (weaponStore.buyWeapon(idWeapon, p)) {
+            int weaponId;
+            while (true) {
+                weaponStore.openStock();
+                System.out.println("Buy a weapon: ");
+                String weaponIdinput = scanner.nextLine().trim();
+                try {
+                    weaponId = Integer.parseInt(weaponIdinput);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid option !!");
+                    continue;
+                }
+
+                if (weaponId < 1 || weaponId > 8) {
+                    System.out.println("Invalid : " + weaponId);
+                } else {
+                    break;
+                }
+            }
+            if (weaponStore.buyWeapon(weaponId, p)) {
                 System.out.println("You can kill the monsters !! good louck !!");
             } else {
                 System.out.println("You don't have money !!!");
