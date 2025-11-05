@@ -1,6 +1,6 @@
 package rpgEscapeCastel.gameMap;
 
-public class Obstacle implements Destructible, InterfacePlace {
+public class Obstacle implements IDestructible, IPlace{
 
     private String obstacleType = "obstacle.txt";
     private int power;
@@ -47,5 +47,15 @@ public class Obstacle implements Destructible, InterfacePlace {
     public int getLife() {
         return power;
     }
+    @Override
+    public boolean isFreePlace() {
+        return false;   
+    }
+
+       @Override
+    public IDestructible asDestructible() {
+        return this;
+    }
+
 
 }

@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import rpgEscapeCastel.ascii.PrintAscii;
-import rpgEscapeCastel.gameMap.Destructible;
 import rpgEscapeCastel.gameMap.Monster;
 import rpgEscapeCastel.gameMap.Obstacle;
 
@@ -44,10 +43,6 @@ public abstract class Weapon {
 
     public String resourcePath() {
         return "weapons/" + fileName;
-    }
-
-    public void attack(Destructible target) {
-        target.takeDamage(damage);
     }
 
     public void attack(Monster target) {

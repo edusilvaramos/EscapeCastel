@@ -2,7 +2,7 @@ package rpgEscapeCastel.gameMap;
 
 import rpgEscapeCastel.player.Team;
 
-public class Monster implements Destructible, InterfacePlace {
+public class Monster implements IDestructible, IPlace {
 
     private final String name;
     private int life;
@@ -19,10 +19,10 @@ public class Monster implements Destructible, InterfacePlace {
     // make a rondonly moster from team 
     public static Monster fromTeam(Team team) {
         return new Monster(
-            team.getTeamName(),   
-            team.getTeamLife(),   
-            team.getTeamPower(),
-            team.getFileName()  
+                team.getTeamName(),
+                team.getTeamLife(),
+                team.getTeamPower(),
+                team.getFileName()
         );
     }
 
@@ -42,15 +42,29 @@ public class Monster implements Destructible, InterfacePlace {
         return " M ";
     }
 
-     @Override
+    @Override
     public String getFileName() {
         return fileName;
     }
+
     @Override
     public int getLife() {
         return life;
     }
+
     @Override
     public int getPower() {
-        return defense;}
+        return defense;
+    }
+
+    @Override
+    public boolean isFreePlace() {
+        return false;
+    }
+
+    @Override
+    public IDestructible asDestructible() {
+        return this;
+    }
+
 }

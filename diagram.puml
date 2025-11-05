@@ -62,7 +62,8 @@ package rpgEscapeCastel {
             + hasWeapon() : boolean
         }
 
-        class Player implements InterfacePlace  {
+        class Player implements IDestructible, Iplace {
+            - id : int
             - name : String
             - team : Team
             + getName() : String
@@ -73,8 +74,10 @@ package rpgEscapeCastel {
             + printInventory() : void
             + symbolPlace() : String
             + getFileName() : String
+
         }
     }
+
 
     package weapon {
 
@@ -92,15 +95,17 @@ package rpgEscapeCastel {
             + getFileName() : String
             + attack() : void
         }
+   
 
-        class Axe extends Weapon
-        class Bow extends Weapon
-        class Explosive extends Weapon
-        class Gun extends Weapon
-        class Knife extends Weapon
-        class Mace extends Weapon
-        class Shield extends Weapon
-        class Sword extends Weapon
+            class Axe extends Weapon
+            class Bow extends Weapon
+            class Explosive extends Weapon
+            class Gun extends Weapon
+            class Knife extends Weapon
+            class Mace extends Weapon
+            class Shield extends Weapon
+            class Sword extends Weapon
+        
 
         class WeaponStore {
             - stockWeapons : List
@@ -117,8 +122,7 @@ package rpgEscapeCastel {
 
         class GameMap {
             - SIZE : int
-            - grid : InterfacePlace
-            - rnd : Random
+            - grid : IDestructible[][]
             - player : player.Player
             - playerRow : int
             - playerCol : int
@@ -130,12 +134,7 @@ package rpgEscapeCastel {
             + playerMovement() : void
         }
 
-        interface InterfacePlace {
-            + getFileName() : String
-            + symbolPlace() : String
-        }
-
-        interface Destructible {
+        interface IDestructible {
             + isDestroyed() : boolean
             + getFileName() : String
             + takeDamage() : void
@@ -143,7 +142,14 @@ package rpgEscapeCastel {
             + getPower() : int
         }
 
-        class Monster implements Destructible, InterfacePlace {
+        interface Iplace {
+            + symbolPlace() : String
+            + isFreePlace() : boolean
+            + getFileName() : String
+            + asIDestructible() : IDestructible
+        }
+
+        class Monster implements IDestructible, Iplace {
             - name : String
             - life : int
             - defense : int
@@ -157,7 +163,7 @@ package rpgEscapeCastel {
             + getPower() : int
         }
 
-        class Obstacle implements Destructible, InterfacePlace {
+        class Obstacle implements IDestructible, Iplace {
             - obstacleType : String
             - life : int
             - defense : int
@@ -171,7 +177,12 @@ package rpgEscapeCastel {
             + getPower() : int
         }
 
-        class ExitCastel implements InterfacePlace {
+        class ExitCastel implements IDestructible, Iplace {
+            - name : String
+            - life : int
+            - defense : int
+            - fileName : String
+            + isDestroyed() : boolean
             + getFileName() : String
             + win() : void
             + symbolPlace() : String
@@ -179,26 +190,31 @@ package rpgEscapeCastel {
             + winFight() : void
             + gameOver() : void
         }
+        class EmptyCell implements Iplace {
+            + symbolPlace() : String
+            + isFreePlace() : boolean
+            + getFileName() : String
+            + asDestructible() : IDestructible
+        }
 
 
     }
-
     App ..> ascii.PrintAscii : uses
-    player.Player ..> ascii.PrintAscii : uses
-
-    player.Player "1" *-- "1" Inventory : owns
-    player.Inventory "1" o-- "1" Weapon : weapons
-    player.Player --> "1" Team : chosen
-    player.Player ..> WeaponStore : uses
-
+    Player ..> ascii.PrintAscii : uses
+    Player ..> WeaponStore : uses
     App ..> Player : uses
     App ..> Team : uses
     Weapon ..> PrintAscii : uses
-    Weapon ..> Destructible : attack
-    WeaponStore o-- "*" Weapon : catalog/factory
-    GameMap o-- Player : player
-    GameMap ..> InterfacePlace : grid cells
-    GameMap ..> Destructible : combat
+    Player "1..1" -- "1..1" Weapon : has
+    Player "1..1" -- "1..1" Inventory: has
+    Player "1..1" --> "n..1" Team : chosen
+    Monster "1..1" -- "N..1" Team : is
+    WeaponStore "1..0" -- "1..1" Weapon : has
+    GameMap "1..1" -- "1..1" Player : has
+    GameMap "1..n" -- "1..n" Obstacle : has
+    GameMap "1..n" -- "1..n" Monster : has
+    GameMap "1..1" -- "1..1" ExitCastel : has
+    GameMap "1..n" -- "1..n" EmptyCell : has
 }
 
 @enduml

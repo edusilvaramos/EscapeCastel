@@ -1,10 +1,11 @@
 package rpgEscapeCastel.player;
 
 import rpgEscapeCastel.ascii.PrintAscii;
-import rpgEscapeCastel.gameMap.InterfacePlace;
+import rpgEscapeCastel.gameMap.IDestructible;
+import rpgEscapeCastel.gameMap.IPlace;
 import rpgEscapeCastel.weapon.Weapon;
 
-public class Player implements InterfacePlace{
+public class Player implements IDestructible, IPlace {
 
     private String name;
     private final Team team;
@@ -62,15 +63,16 @@ public class Player implements InterfacePlace{
 
         int i = 1;
         for (Weapon w : inventory.viewWeapons()) {
-            System.out.printf("%d) Name: %s - Damage: %d - Price: %d", i++,w.getName(), w.getDamage(), w.getPrice());
+            System.out.printf("%d) Name: %s - Damage: %d - Price: %d", i++, w.getName(), w.getDamage(), w.getPrice());
             System.err.println("");
             System.out.println(PrintAscii.loadAsciiart(w.resourcePath()));
             System.err.println("");
-            
+
         }
         System.out.println("----------------------");
 
     }
+
     @Override
     public String symbolPlace() {
         return " P ";
@@ -79,6 +81,38 @@ public class Player implements InterfacePlace{
     @Override
     public String getFileName() {
         return team.getFileName();
+    }
+
+    @Override
+    public boolean isFreePlace() {
+        return false;
+    }
+
+    @Override
+    public void takeDamage(int amount) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'takeDamage'");
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return false;
+    }
+
+    @Override
+    public int getPower() {
+        int w = inventory.getWeapon().getDamage();
+        return team.getTeamPower() + w;
+    }
+
+    @Override
+    public int getLife() {
+        return team.getTeamLife();
+    }
+
+    @Override
+    public IDestructible asDestructible() {
+        return null;
     }
 
 }

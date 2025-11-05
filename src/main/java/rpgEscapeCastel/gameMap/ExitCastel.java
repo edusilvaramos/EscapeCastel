@@ -2,7 +2,7 @@ package rpgEscapeCastel.gameMap;
 
 import rpgEscapeCastel.ascii.PrintAscii;
 
-public final class ExitCastel implements InterfacePlace {
+public final class ExitCastel implements  IPlace{
 
     @Override
     public String symbolPlace() {
@@ -28,6 +28,16 @@ public final class ExitCastel implements InterfacePlace {
     }
     public static void winFight() {
         PrintAscii.printAsciiart("logo/winfight.txt");
+    }
+
+    @Override
+    public boolean isFreePlace() {
+        return false;
+    }
+
+    @Override
+    public IDestructible asDestructible() {
+        return null;
     }
 
 }

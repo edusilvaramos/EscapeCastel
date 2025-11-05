@@ -11,57 +11,58 @@ import rpgEscapeCastel.player.Team;
 
 public final class GameMap {
 
+    // pensar em fazer um ArrayList de de objetos para nanip.... 
     private static final int SIZE = 13;
-    private final InterfacePlace[][] grid = new InterfacePlace[SIZE][SIZE];
-    private final Random rnd = new Random();
-    private Player player;
+    private final IPlace[][] grid = new IPlace[SIZE][SIZE];
+    private final Player player;
+    private static final String DIV_FILE_NAME = "div.txt";
 
     private int playerRow = 0;
     private int playerCol = 0;
 
-    public GameMap(InterfacePlace player) {
-        fisrtMap(player);
-        this.player = (Player) player;
+    public GameMap(Player player) {
+        this.player = player;
+        firstMap();
     }
 
-    private void fisrtMap(InterfacePlace player) {
+    private void firstMap() {
         // start
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
-                grid[r][c] = null;
+                grid[r][c] = new EmptyCell();
             }
         }
 
-        // player e saída
-        grid[0][0] = player;
-        playerRow = 0;
-        playerCol = 0;
+        // Exit
         grid[SIZE - 1][SIZE - 1] = new ExitCastel();
 
-        // apor testes deixar eles sem marcas 
-        // coloca 3 M e 3 O em lugares livres
-        List<int[]> livres = new ArrayList<>();
+        // player
+        grid[0][0] = this.player;
+
+        // testes com marcas ****
+        List<int[]> free = new ArrayList<>();
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
                 if (!((row == 0 && col == 0) || (row == SIZE - 1 && col == SIZE - 1))) {
-                    if (grid[row][col] == null) {
-                        livres.add(new int[]{row, col});
+                    if (grid[row][col].isFreePlace()) {
+                        free.add(new int[]{row, col});
                     }
                 }
             }
         }
-        Collections.shuffle(livres, rnd);
+        // 
+        Collections.shuffle(free, new Random());
         int idx = 0;
 
         // base map size
         int nObstaclerAndMosters = SIZE * SIZE / 12;
 
-        for (int i = 0; i < nObstaclerAndMosters && idx < livres.size(); i++, idx++) {
-            int[] p = livres.get(idx);
+        for (int i = 0; i < nObstaclerAndMosters && idx < free.size(); i++, idx++) {
+            int[] p = free.get(idx);
             grid[p[0]][p[1]] = Monster.fromTeam(Team.random());
         }
-        for (int i = 0; i < nObstaclerAndMosters && idx < livres.size(); i++, idx++) {
-            int[] p = livres.get(idx);
+        for (int i = 0; i < nObstaclerAndMosters && idx < free.size(); i++, idx++) {
+            int[] p = free.get(idx);
             grid[p[0]][p[1]] = new Obstacle();
         }
     }
@@ -71,7 +72,7 @@ public final class GameMap {
         System.out.println();
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
-                String cell = (grid[r][c] == null) ? "   " : grid[r][c].symbolPlace();
+                String cell = (grid[r][c].isFreePlace()) ? "   " : grid[r][c].symbolPlace();
                 System.out.print("[" + cell + "]");
             }
             System.out.println();
@@ -98,13 +99,13 @@ public final class GameMap {
 
             if (move.equals("x")) {
                 ExitCastel.youDied();
-                System.exit(0);
+                break;
             }
-            // possit
+            // movimento
             int alvoR = playerRow;
             int alvoC = playerCol;
 
-            // movimento simples
+            // movimentos teclado
             if (move.equals("z")) {
                 alvoR--;
             } else if (move.equals("s")) {
@@ -115,6 +116,10 @@ public final class GameMap {
                 alvoC++;
             }
 
+            if (alvoR == SIZE - 1 && alvoC == SIZE - 1) {
+                ExitCastel.win();
+                break;
+            }
             if (alvoR < 0 || alvoR >= SIZE || alvoC < 0 || alvoC >= SIZE) {
                 System.out.println();
                 System.out.println("Out of bounds!!! You can't escape from here!! ha ha ha");
@@ -122,60 +127,68 @@ public final class GameMap {
                 continue;
             }
 
-            InterfacePlace goPlace = grid[alvoR][alvoC];
+            IPlace goPlace = grid[alvoR][alvoC];
+            boolean moveAllowed = false;
 
-            // refac this, x instanceof...
-            if ((goPlace instanceof Monster) || (goPlace instanceof Obstacle)) {
+            if (goPlace.isFreePlace()) {
+                moveAllowed = true;
+            } else {
+                // destructible y/n ? 
+                IDestructible enemy = goPlace.asDestructible();
+                if (enemy == null) {
+                    PrintAscii.printAsciiart("div.txt");
+                    printMap();
+                    continue;
+                }
 
+                // if asDestructible go to fight !
                 PrintAscii.printAsciiart("fight.txt");
-                System.out.println("");
+                System.out.println();
                 PrintAscii.printAsciiart(player.getTeam().getFileName());
                 player.printInventory();
-                System.out.println("");
+                System.out.println();
                 PrintAscii.printAsciiart("x.txt");
-                System.out.println("");
+                System.out.println();
                 PrintAscii.printAsciiart(goPlace.getFileName());
                 System.out.println();
-                PrintAscii.printAsciiart("div.txt");
+                PrintAscii.printAsciiart(DIV_FILE_NAME);
 
                 System.out.println("Fight or chicken out? (f/c)");
-                System.out.println();
                 String battle = SC.nextLine().trim().toLowerCase();
 
-                if (battle.equals("f")) {
-                    if (!fight(player, (Destructible) goPlace)) {
+                if ("f".equals(battle)) {
+                    boolean playerWon = fight(player, enemy);
+                    if (playerWon) {
+                        ExitCastel.winFight();
+                        // get the place he he victory !
+                        grid[alvoR][alvoC] = new EmptyCell();
+                        moveAllowed = true;
+                    } else {
                         ExitCastel.youDied();
                         break;
-                    } else {
-                        ExitCastel.winFight();
                     }
+                } else {
+                    // if chicken out
+                    PrintAscii.printAsciiart(DIV_FILE_NAME);
+                    System.out.println("Chicken out!! loser... !!");
+                    printMap();
+                    continue;
                 }
-                printMap();
-                continue;
             }
 
-            // move !
-            InterfacePlace player = grid[playerRow][playerCol];
-            grid[playerRow][playerCol] = null;
-            grid[alvoR][alvoC] = player;
-            playerRow = alvoR;
-            playerCol = alvoC;
-
-            // checa saída
-            if (goPlace instanceof ExitCastel) {
-                ExitCastel.win();
-                System.exit(0);
+            if (moveAllowed) {
+                grid[playerRow][playerCol] = new EmptyCell();
+                grid[alvoR][alvoC] = player;
+                playerRow = alvoR;
+                playerCol = alvoC;
             }
-            PrintAscii.printAsciiart("div.txt");
-            printMap(); 
-            
+            PrintAscii.printAsciiart(DIV_FILE_NAME);
+            printMap();
+
         }
-       
     }
 
-    public boolean fight(Player p, Destructible enemy) {
-
-        // power = weaponPower + teamPower
+    public boolean fight(Player p, IDestructible enemy) {
         int weaponDamage = 0;
         if (p.getInventory().getWeapon() == null) {
             weaponDamage = 0;
@@ -214,4 +227,5 @@ public final class GameMap {
 
         return playerLife > 0;
     }
+
 }
