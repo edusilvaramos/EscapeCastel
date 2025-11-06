@@ -39,7 +39,7 @@ public class Monster implements IDestructible, IPlace {
 
     @Override
     public String symbolPlace() {
-        return " M ";
+        return "   ";
     }
 
     @Override

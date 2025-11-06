@@ -23,7 +23,7 @@ public class Obstacle implements IDestructible, IPlace{
 
     @Override
     public String symbolPlace() {
-        return " O ";
+        return "   ";
     }
 
     @Override
