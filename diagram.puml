@@ -154,6 +154,8 @@ package rpgEscapeCastele {
             - life : int
             - defense : int
             - fileName : String
+            + toString() : String
+            + getName() : String
             + isDestroyed() : boolean
             + getFileName() : String
             + takeDamage() : void

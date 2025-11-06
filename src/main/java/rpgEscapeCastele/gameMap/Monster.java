@@ -26,6 +26,10 @@ public class Monster implements IDestructible, IPlace {
         );
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void takeDamage(int amount) {
         int effective = Math.max(0, amount - defense);
@@ -65,6 +69,10 @@ public class Monster implements IDestructible, IPlace {
     @Override
     public IDestructible asDestructible() {
         return this;
+    }
+    @Override
+    public String toString() {
+        return "Monster: " + name + ", Life: " + life + ", Defense: " + defense;
     }
 
 }
