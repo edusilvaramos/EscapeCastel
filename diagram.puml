@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 skinparam classFontStyle bold
 
-package rpgEscapeCastel {
+package rpgEscapeCastele {
 
     class App {
         + main: void
@@ -177,7 +177,7 @@ package rpgEscapeCastel {
             + getPower() : int
         }
 
-        class ExitCastel implements IDestructible, Iplace {
+        class ExitCastele implements IDestructible, Iplace {
             - name : String
             - life : int
             - defense : int
@@ -213,7 +213,7 @@ package rpgEscapeCastel {
     GameMap "1..1" -- "1..1" Player : has
     GameMap "1..n" -- "1..n" Obstacle : has
     GameMap "1..n" -- "1..n" Monster : has
-    GameMap "1..1" -- "1..1" ExitCastel : has
+    GameMap "1..1" -- "1..1" ExitCastele : has
     GameMap "1..n" -- "1..n" EmptyCell : has
 }
 

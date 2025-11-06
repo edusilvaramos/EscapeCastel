@@ -1,13 +1,13 @@
-package rpgEscapeCastel;
+package rpgEscapeCastele;
 
 import java.util.Scanner;
 
-import rpgEscapeCastel.ascii.PrintAscii;
-import rpgEscapeCastel.gameMap.GameMap;
-import rpgEscapeCastel.player.Player;
-import rpgEscapeCastel.player.Team;
-import rpgEscapeCastel.weapon.Weapon;
-import rpgEscapeCastel.weapon.WeaponStore;
+import rpgEscapeCastele.ascii.PrintAscii;
+import rpgEscapeCastele.gameMap.GameMap;
+import rpgEscapeCastele.player.Player;
+import rpgEscapeCastele.player.Team;
+import rpgEscapeCastele.weapon.Weapon;
+import rpgEscapeCastele.weapon.WeaponStore;
 
 public class App {
 
@@ -15,7 +15,7 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         PrintAscii.printAsciiart("logo/logo1.txt");
         System.out.println("----------------------");
-        System.out.println("Welcome to Escape Castel !!!");
+        System.out.println("Welcome to Escape Castele !!!");
         System.out.println("----------------------");
 
         System.out.println("Create the name player:");

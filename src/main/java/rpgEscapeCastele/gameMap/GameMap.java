@@ -1,13 +1,13 @@
-package rpgEscapeCastel.gameMap;
+package rpgEscapeCastele.gameMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import rpgEscapeCastel.ascii.PrintAscii;
-import rpgEscapeCastel.player.Player;
-import rpgEscapeCastel.player.Team;
+import rpgEscapeCastele.ascii.PrintAscii;
+import rpgEscapeCastele.player.Player;
+import rpgEscapeCastele.player.Team;
 
 public final class GameMap {
 
@@ -34,7 +34,7 @@ public final class GameMap {
         }
 
         // Exit
-        grid[SIZE - 1][SIZE - 1] = new ExitCastel();
+        grid[SIZE - 1][SIZE - 1] = new ExitCastele();
 
         // player
         grid[0][0] = this.player;
@@ -68,7 +68,7 @@ public final class GameMap {
     }
 
     private void printMap() {
-        PrintAscii.printAsciiart("castel.txt");
+        PrintAscii.printAsciiart("Castele.txt");
         System.out.println();
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
@@ -98,7 +98,7 @@ public final class GameMap {
             String move = SC.nextLine().trim().toLowerCase();
 
             if (move.equals("x")) {
-                ExitCastel.youDied();
+                ExitCastele.youDied();
                 break;
             }
             // movimento
@@ -117,7 +117,7 @@ public final class GameMap {
             }
 
             if (alvoR == SIZE - 1 && alvoC == SIZE - 1) {
-                ExitCastel.win();
+                ExitCastele.win();
                 break;
             }
             if (alvoR < 0 || alvoR >= SIZE || alvoC < 0 || alvoC >= SIZE) {
@@ -159,12 +159,12 @@ public final class GameMap {
                 if ("f".equals(battle)) {
                     boolean playerWon = fight(player, enemy);
                     if (playerWon) {
-                        ExitCastel.winFight();
+                        ExitCastele.winFight();
                         // get the place he he victory !
                         grid[alvoR][alvoC] = new EmptyCell();
                         moveAllowed = true;
                     } else {
-                        ExitCastel.youDied();
+                        ExitCastele.youDied();
                         break;
                     }
                 } else {

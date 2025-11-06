@@ -1,13 +1,13 @@
-package rpgEscapeCastel.weapon;
+package rpgEscapeCastele.weapon;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import rpgEscapeCastel.ascii.PrintAscii;
-import rpgEscapeCastel.gameMap.Monster;
-import rpgEscapeCastel.gameMap.Obstacle;
+import rpgEscapeCastele.ascii.PrintAscii;
+import rpgEscapeCastele.gameMap.Monster;
+import rpgEscapeCastele.gameMap.Obstacle;
 
 public abstract class Weapon {
 
@@ -57,14 +57,14 @@ public abstract class Weapon {
     private static final Map<Integer, Supplier<Weapon>> BY_ID = new HashMap<>();
 
     static {
-        BY_ID.put(1, rpgEscapeCastel.weapon.weapons.Arrow::new);
-        BY_ID.put(2, rpgEscapeCastel.weapon.weapons.Axe::new);
-        BY_ID.put(3, rpgEscapeCastel.weapon.weapons.Explosive::new);
-        BY_ID.put(4, rpgEscapeCastel.weapon.weapons.Gun::new);
-        BY_ID.put(5, rpgEscapeCastel.weapon.weapons.Knife::new);
-        BY_ID.put(6, rpgEscapeCastel.weapon.weapons.Mace::new);
-        BY_ID.put(7, rpgEscapeCastel.weapon.weapons.Shield::new);
-        BY_ID.put(8, rpgEscapeCastel.weapon.weapons.Sword::new);
+        BY_ID.put(1, rpgEscapeCastele.weapon.weapons.Arrow::new);
+        BY_ID.put(2, rpgEscapeCastele.weapon.weapons.Axe::new);
+        BY_ID.put(3, rpgEscapeCastele.weapon.weapons.Explosive::new);
+        BY_ID.put(4, rpgEscapeCastele.weapon.weapons.Gun::new);
+        BY_ID.put(5, rpgEscapeCastele.weapon.weapons.Knife::new);
+        BY_ID.put(6, rpgEscapeCastele.weapon.weapons.Mace::new);
+        BY_ID.put(7, rpgEscapeCastele.weapon.weapons.Shield::new);
+        BY_ID.put(8, rpgEscapeCastele.weapon.weapons.Sword::new);
     }
 
     public static Weapon fromId(int id) {

@@ -1,11 +1,11 @@
-package rpgEscapeCastel.player;
+package rpgEscapeCastele.player;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import rpgEscapeCastel.weapon.Weapon;
+import rpgEscapeCastele.weapon.Weapon;
 
 public final class Inventory {
 

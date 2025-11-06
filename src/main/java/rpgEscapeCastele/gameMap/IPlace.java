@@ -1,4 +1,4 @@
-package rpgEscapeCastel.gameMap;
+package rpgEscapeCastele.gameMap;
 
 public interface IPlace {
 

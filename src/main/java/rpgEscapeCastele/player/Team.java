@@ -1,4 +1,4 @@
-package rpgEscapeCastel.player;
+package rpgEscapeCastele.player;
 
 import java.util.concurrent.ThreadLocalRandom;
 

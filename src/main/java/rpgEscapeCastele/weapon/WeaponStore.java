@@ -1,9 +1,9 @@
-package rpgEscapeCastel.weapon;
+package rpgEscapeCastele.weapon;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rpgEscapeCastel.player.Player;
+import rpgEscapeCastele.player.Player;
 
 public class WeaponStore {
 

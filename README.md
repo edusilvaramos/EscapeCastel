@@ -1,4 +1,4 @@
-# RPG Escape Castel (Java Mini Project)
+# RPG Escape Castele (Java Mini Project)
 
 A small **text-based RPG** where a prisoner tries to escape a dungeon, fights monsters, breaks obstacles, buys weapons, and manages an inventory — all via console menus. Great practice for core OOP in Java. 
 ---
@@ -9,7 +9,7 @@ Make sure you have **Java 17+** and **Maven** installed.
 
 ```bash
 mvn clean compile
-mvn exec:java -Dexec.mainClass="rpgEscapeCastel.App"
+mvn exec:java -Dexec.mainClass="rpgEscapeCastele.App"
 ```
 
 ---

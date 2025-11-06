@@ -1,6 +1,6 @@
-package rpgEscapeCastel.gameMap;
+package rpgEscapeCastele.gameMap;
 
-import rpgEscapeCastel.player.Team;
+import rpgEscapeCastele.player.Team;
 
 public class Monster implements IDestructible, IPlace {
 

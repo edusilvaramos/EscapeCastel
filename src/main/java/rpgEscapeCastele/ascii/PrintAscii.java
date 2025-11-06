@@ -1,4 +1,4 @@
-package rpgEscapeCastel.ascii;
+package rpgEscapeCastele.ascii;
 
 import java.io.InputStream;
 

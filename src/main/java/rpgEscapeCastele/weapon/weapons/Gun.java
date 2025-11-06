@@ -1,6 +1,6 @@
-package rpgEscapeCastel.weapon.weapons;
+package rpgEscapeCastele.weapon.weapons;
 
-import rpgEscapeCastel.weapon.Weapon;
+import rpgEscapeCastele.weapon.Weapon;
 
 public final class Gun extends Weapon {
 

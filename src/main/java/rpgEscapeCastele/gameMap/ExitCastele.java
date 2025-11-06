@@ -1,8 +1,8 @@
-package rpgEscapeCastel.gameMap;
+package rpgEscapeCastele.gameMap;
 
-import rpgEscapeCastel.ascii.PrintAscii;
+import rpgEscapeCastele.ascii.PrintAscii;
 
-public final class ExitCastel implements  IPlace{
+public final class ExitCastele implements  IPlace{
 
     @Override
     public String symbolPlace() {

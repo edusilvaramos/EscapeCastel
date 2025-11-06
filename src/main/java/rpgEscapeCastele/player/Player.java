@@ -1,9 +1,9 @@
-package rpgEscapeCastel.player;
+package rpgEscapeCastele.player;
 
-import rpgEscapeCastel.ascii.PrintAscii;
-import rpgEscapeCastel.gameMap.IDestructible;
-import rpgEscapeCastel.gameMap.IPlace;
-import rpgEscapeCastel.weapon.Weapon;
+import rpgEscapeCastele.ascii.PrintAscii;
+import rpgEscapeCastele.gameMap.IDestructible;
+import rpgEscapeCastele.gameMap.IPlace;
+import rpgEscapeCastele.weapon.Weapon;
 
 public class Player implements IDestructible, IPlace {
 
