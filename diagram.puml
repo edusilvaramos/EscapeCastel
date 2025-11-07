@@ -122,11 +122,10 @@ package rpgEscapeCastele {
 
         class GameMap {
             - SIZE : int
-            - grid : IDestructible[][]
+            - grid : IPlace[][]
             - player : player.Player
             - playerRow : int
             - playerCol : int
-            - SC : Scanner
             --
             - fisrtMaph(): void
             - printMap() : void
